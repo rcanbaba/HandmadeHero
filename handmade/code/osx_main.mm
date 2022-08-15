@@ -1,6 +1,8 @@
 // osx_main.mm
 //
 // The main entry point the Handmade Hero
+//
+// rcanbabaoglu@gmail.com
 
 #include <stdio.h>
 #import <AppKit/AppKit.h>
