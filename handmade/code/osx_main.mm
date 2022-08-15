@@ -8,8 +8,22 @@
 static float GlobalRenderingWidth = 1024;
 static float GlobalRenderingHeight = 768;
 
+static bool Running = true;
+
+@interface HandmadeMainWindowDelegate: NSObject<NSWindowDelegate>
+@end
+
+@implementation HandmadeMainWindowDelegate
+
+- (void)windowWillClose:(NSNotification *)notification {
+    Running = false;
+}
+
+@end
 
 int main(int argc, const char * argv[]) {
+    
+    HandmadeMainWindowDelegate *mainWindowDelegate = [[HandmadeMainWindowDelegate alloc] init];
     
     NSRect screenRect = [[NSScreen mainScreen] frame];
     
@@ -26,7 +40,12 @@ int main(int argc, const char * argv[]) {
                                                      backing: NSBackingStoreBuffered
                                                        defer: NO];
     
-    while(true) {
+    [window setBackgroundColor: NSColor.redColor];
+    [window setTitle: @"Handmade Hero"];
+    [window makeKeyAndOrderFront: nil];
+    [window setDelegate: mainWindowDelegate];
+    
+    while(Running) {
         NSEvent* event;
         do {
             event = [NSApp nextEventMatchingMask: NSEventMaskAny
