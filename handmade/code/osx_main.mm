@@ -42,10 +42,21 @@ int main(int argc, const char * argv[]) {
                                                      backing: NSBackingStoreBuffered
                                                        defer: NO];
     
-    [window setBackgroundColor: NSColor.redColor];
+    [window setBackgroundColor: NSColor.blackColor];
     [window setTitle: @"Handmade Hero"];
     [window makeKeyAndOrderFront: nil];
     [window setDelegate: mainWindowDelegate];
+    
+    int bitmapWidth = window.contentView.bounds.size.width;
+    int bitmapHeight = window.contentView.bounds.size.height;
+    int bytesPerPixel = 4; // 8 bit red + 8 bit green + 8 bit blue + 8 bit alpha = 4 Bytes
+    
+    // the size of a row
+    int pitch = bitmapWidth * bytesPerPixel;
+    // Buffer size
+    int bufferSize = pitch * bitmapHeight;
+    
+    buffer = (uint8_t *)malloc(bufferSize);
     
     while(Running) {
         NSEvent* event;
